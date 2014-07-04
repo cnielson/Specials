@@ -3,7 +3,7 @@ namespace Specials.DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class CreateTables : DbMigration
+    public partial class f : DbMigration
     {
         public override void Up()
         {
@@ -23,6 +23,7 @@ namespace Specials.DAL.Migrations
                         SpecialId = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false),
                         IsValid = c.Boolean(nullable: false),
+                        DayOfWeek = c.Int(nullable: false),
                         Place_PlaceId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.SpecialId)

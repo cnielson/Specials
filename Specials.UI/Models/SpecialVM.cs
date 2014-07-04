@@ -1,23 +1,20 @@
-﻿using Specials.DAL.Models;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
 
-namespace Specials.DAL
+namespace Specials.UI.Models
 {
-    public class Special
+    public class SpecialVM
     {
-        public Special()
-        {
-            Reviews = new List<Review>();
-        }
-        [Key]
         public int SpecialId { get; set; }
         [Required]
         public string Name { get; set; }
-        public virtual ICollection<Tag> Tags { get; set; }
+        public ICollection<TagVM> Tags { get; set; }
         [Required]
-        public virtual Place Place { get; set; }
-        public virtual ICollection<Review> Reviews { get; set; }
+        public PlaceVM Place { get; set; }
+        public ICollection<ReviewVM> Reviews { get; set; }
         public bool IsValid { get; set; }
         [Range(1, 7, ErrorMessage = "must be from 1 - 7")]
         public int DayOfWeek { get; set; }
