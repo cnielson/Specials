@@ -19,6 +19,8 @@ namespace Specials.UI.Models
         [Required]
         [Display(Name="Day")]
         public DayOfWeek DayOfWeek { get; set; }
+        [Display(Name="Average Review / 5")]
         public int AverageReviewScore { get; set; }
+        public int TotalReviews { get; set; }
     }
 }

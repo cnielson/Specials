@@ -1,4 +1,6 @@
-﻿@model List<Specials.UI.Models.SpecialVM>
+﻿@using Telerik.Web.Mvc.UI;
+
+@model List<Specials.UI.Models.SpecialVM>
 
 @{
     ViewBag.Title = "Index";
@@ -20,9 +22,9 @@
         <th>
             @Html.DisplayNameFor(model => model.First().DayOfWeek)
         </th>
-        <td>
+        <th>
             @Html.DisplayNameFor(model => model.First().AverageReviewScore)
-        </td>
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.First().Tags.First().Name)
         </th>
@@ -44,13 +46,12 @@
             <td>
                 @if (item.AverageReviewScore >= 0)
                 {
-                    @Html.DisplayFor(modelItem => item.AverageReviewScore)
+                    @Html.DisplayFor(modelItem => item.AverageReviewScore)  <text>(</text>@Html.DisplayFor(modelItem => item.TotalReviews) <text>Reviews)</text>
                 }
                 else
                 {
-                    @Html.Display("N/A")
+                    <text>N/A</text>
                 }
-
             </td>
             <td>
                 @{
@@ -64,6 +65,7 @@
                 }
             </td>
             <td>
+                
                 @Html.ActionLink("Edit", "Edit", new { id = item.SpecialId }) |
                 @Html.ActionLink("Details", "Details", new { id = item.SpecialId }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.SpecialId })
@@ -71,8 +73,5 @@
 
         </tr>
     }
+    
 </table>
-
-<div class="row">
-
-</div>

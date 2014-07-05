@@ -6,6 +6,11 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/bundles/css")
     @Scripts.Render("~/bundles/modernizr")
+    @(
+ Html.Telerik().StyleSheetRegistrar()
+     .DefaultGroup(group => group.Add("telerik.common.css")
+                     .Add("telerik.vista.css"))
+    )
 
 </head>
 <body>
@@ -39,5 +44,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @(Html.Telerik().ScriptRegistrar())
 </body>
 </html>

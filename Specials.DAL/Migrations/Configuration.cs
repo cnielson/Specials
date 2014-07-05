@@ -20,6 +20,14 @@ namespace Specials.DAL.Migrations
             AddTags(context);
             AddSpecials(context);
             AddWingsTagsToSpecials(context);
+            AddReviews(context);
+        }
+
+        private void AddReviews(SpecialsContext context)
+        {
+            var rv = new Review { ReviewId = 1, IsPublic = true, Rating = 3, Description = "Solid wings. Cheesie buffalo was the best sauce but not really spicy. Their spiciest sauce was a little spicy but not much for flavor.", SpecialId = 1 };
+            context.Reviews.AddOrUpdate(rv);
+            context.SaveChanges();
         }
 
         private void AddWingsTagsToSpecials(SpecialsContext context)

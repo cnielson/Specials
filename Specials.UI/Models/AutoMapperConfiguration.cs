@@ -13,7 +13,8 @@ namespace Specials.UI.Models
         {
             Mapper.CreateMap<Special, SpecialVM>()
                 .ForMember(dest => dest.DayOfWeek, opt => opt.MapFrom(src => (DayOfWeek)src.DayOfWeek))
-                .ForMember(dest => dest.AverageReviewScore, opt => opt.MapFrom(src => (GetAverage(src))));
+                .ForMember(dest => dest.AverageReviewScore, opt => opt.MapFrom(src => (GetAverage(src))))
+                .ForMember(dest=>dest.TotalReviews, opt=>opt.MapFrom(src=>src.Reviews.Count()));
             Mapper.CreateMap<Tag, TagVM>();
             Mapper.CreateMap<Place, PlaceVM>();
             Mapper.CreateMap<Review, ReviewVM>();
