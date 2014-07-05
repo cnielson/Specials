@@ -1,11 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Linq;
 using Specials.DAL.Models;
 using Specials.DAL;
+using AutoMapper;
+using Specials.UI.Models;
+using System.Collections.Generic;
 
 namespace Specials.UI.Controllers
 {
@@ -17,8 +19,11 @@ namespace Specials.UI.Controllers
         {
             using (var context = new Specials.DAL.SpecialsContext())
             {
+                
                 var s = context.Specials.ToList(); //todo: convert this to VM
-                return View(s);
+                var specialVms = Mapper.Map<List<Special>, List<SpecialVM>>(s);
+                
+                return View(specialVms);
             }
         }
 

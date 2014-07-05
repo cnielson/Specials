@@ -19,33 +19,39 @@ namespace Specials.DAL.Migrations
             AddPlaces(context);
             AddTags(context);
             AddSpecials(context);
-            //AddWingsTagsToSpecials(context);
+            AddWingsTagsToSpecials(context);
         }
 
         private void AddWingsTagsToSpecials(SpecialsContext context)
         {
             var sps = context.Specials.ToList();
-            var ts = context.Tags.Where(t=>t.TagId == 1 || t.TagId == 2);
-            foreach(var sp in sps)
+            var ts = context.Tags.Where(t => t.TagId == 1 || t.TagId == 2).ToList();
+            foreach (var sp in sps)
             {
-                sp.Tags = ts.ToList();
+                foreach (var tag in ts)
+                {
+                    if (!sp.Tags.Any(t => t.TagId == tag.TagId))
+                    {
+                        sp.Tags.Add(tag);
+                    }
+                }
             }
             context.SaveChanges();
         }
 
         private void AddSpecials(SpecialsContext context)
         {
-            AddSpecial(context, 1, "$0.35 wings", "Mullen's", true, DayOfWeek.Monday);
-            AddSpecial(context, 2, "$0.45 wings", "Bird's Nest", true, DayOfWeek.Sunday);
-            AddSpecial(context, 3, "$0.45 wings", "Bird's Nest", true, DayOfWeek.Thursday);
-            AddSpecial(context, 4, "$0.50 wings", "Racine Plumbing", true, DayOfWeek.Tuesday);
-            AddSpecial(context, 5, "$0.35 wings", "Dark Horse", true, DayOfWeek.Thursday);
-            AddSpecial(context, 6, "$0.40 wings", "Lincoln Station", true, DayOfWeek.Monday);
-            AddSpecial(context, 7, "$0.30 wings", "Merkle's", true, DayOfWeek.Wednesday);
-            AddSpecial(context, 8, "$6.00 jumbo wings(8)", "Mystic Celt", true, DayOfWeek.Wednesday);
-            AddSpecial(context, 9, "$6.00 jumbo wings(8)", "Mystic Celt", true, DayOfWeek.Saturday);
-            AddSpecial(context, 10, "$0.25 wings", "Kelly's Pub", true, DayOfWeek.Wednesday);
-            AddSpecial(context, 11, "0.35 wings", "Houndstooth Saloon", true, DayOfWeek.Monday);
+            AddSpecial(context, 1, "35¢ wings", "Mullen's", true, DayOfWeek.Monday);
+            AddSpecial(context, 2, "45¢ wings", "Bird's Nest", true, DayOfWeek.Sunday);
+            AddSpecial(context, 3, "45¢ wings", "Bird's Nest", true, DayOfWeek.Thursday);
+            AddSpecial(context, 4, "50¢ wings", "Racine Plumbing", true, DayOfWeek.Tuesday);
+            AddSpecial(context, 5, "35¢ wings", "Dark Horse", true, DayOfWeek.Thursday);
+            AddSpecial(context, 6, "40¢ wings", "Lincoln Station", true, DayOfWeek.Monday);
+            AddSpecial(context, 7, "30¢ wings", "Merkle's", true, DayOfWeek.Wednesday);
+            AddSpecial(context, 8, "$6.00 jumbo wings (8)", "Mystic Celt", true, DayOfWeek.Wednesday);
+            AddSpecial(context, 9, "$6.00 jumbo wings (8)", "Mystic Celt", true, DayOfWeek.Saturday);
+            AddSpecial(context, 10, "25¢ wings", "Kelly's Pub", true, DayOfWeek.Wednesday);
+            AddSpecial(context, 11, "35¢ wings", "Houndstooth Saloon", true, DayOfWeek.Monday);
             context.SaveChanges();
         }
 
@@ -82,10 +88,12 @@ namespace Specials.DAL.Migrations
         {
             var place = context.Places.First(p => p.Name == placeName);
             var day = (int)dayOfWeek;
-            if (place != null && day > 0 && day <= 7)
+            if (place != null)
             {
-                context.Specials.AddOrUpdate(new Special { SpecialId = id, Name = name, Place = place, IsValid = isValid, DayOfWeek = day });
+                var special = new Special { SpecialId = id, Name = name, PlaceId = place.PlaceId, IsValid = isValid, DayOfWeek = day };
+                context.Specials.AddOrUpdate(new Special { SpecialId = id, Name = name, PlaceId = place.PlaceId, IsValid = isValid, DayOfWeek = day });
             }
+            context.SaveChanges();
         }
 
         private void AddPlace(SpecialsContext context, int id, string name)

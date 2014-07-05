@@ -9,7 +9,9 @@ namespace Specials.UI.Models
     public class TagVM
     {
         public int TagId { get; set; }
+
         [Required]
+        [Display(Name = "Tags")]
         public string Name { get; set; }
     }
 }

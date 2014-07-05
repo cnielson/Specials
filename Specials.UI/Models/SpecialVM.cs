@@ -16,7 +16,9 @@ namespace Specials.UI.Models
         public PlaceVM Place { get; set; }
         public ICollection<ReviewVM> Reviews { get; set; }
         public bool IsValid { get; set; }
-        [Range(1, 7, ErrorMessage = "must be from 1 - 7")]
-        public int DayOfWeek { get; set; }
+        [Required]
+        [Display(Name="Day")]
+        public DayOfWeek DayOfWeek { get; set; }
+        public int AverageReviewScore { get; set; }
     }
 }

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Specials.DAL;
+using Specials.UI.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -18,6 +21,8 @@ namespace Specials.UI
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            Database.SetInitializer<SpecialsContext>(null);
+            AutoMapperConfiguration.Configure();
         }
     }
 }

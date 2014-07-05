@@ -3,7 +3,7 @@ namespace Specials.DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class f : DbMigration
+    public partial class first : DbMigration
     {
         public override void Up()
         {
@@ -22,13 +22,13 @@ namespace Specials.DAL.Migrations
                     {
                         SpecialId = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false),
+                        PlaceId = c.Int(nullable: false),
                         IsValid = c.Boolean(nullable: false),
                         DayOfWeek = c.Int(nullable: false),
-                        Place_PlaceId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.SpecialId)
-                .ForeignKey("dbo.Places", t => t.Place_PlaceId, cascadeDelete: true)
-                .Index(t => t.Place_PlaceId);
+                .ForeignKey("dbo.Places", t => t.PlaceId, cascadeDelete: true)
+                .Index(t => t.PlaceId);
             
             CreateTable(
                 "dbo.Reviews",
@@ -37,12 +37,12 @@ namespace Specials.DAL.Migrations
                         ReviewId = c.Int(nullable: false, identity: true),
                         Description = c.String(),
                         Rating = c.Int(nullable: false),
+                        SpecialId = c.Int(nullable: false),
                         IsPublic = c.Boolean(nullable: false),
-                        Special_SpecialId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ReviewId)
-                .ForeignKey("dbo.Specials", t => t.Special_SpecialId, cascadeDelete: true)
-                .Index(t => t.Special_SpecialId);
+                .ForeignKey("dbo.Specials", t => t.SpecialId, cascadeDelete: true)
+                .Index(t => t.SpecialId);
             
             CreateTable(
                 "dbo.Tags",
@@ -54,31 +54,31 @@ namespace Specials.DAL.Migrations
                 .PrimaryKey(t => t.TagId);
             
             CreateTable(
-                "dbo.TagSpecials",
+                "dbo.SpecialTags",
                 c => new
                     {
-                        Tag_TagId = c.Int(nullable: false),
-                        Special_SpecialId = c.Int(nullable: false),
+                        SpecialId = c.Int(nullable: false),
+                        TagId = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.Tag_TagId, t.Special_SpecialId })
-                .ForeignKey("dbo.Tags", t => t.Tag_TagId, cascadeDelete: true)
-                .ForeignKey("dbo.Specials", t => t.Special_SpecialId, cascadeDelete: true)
-                .Index(t => t.Tag_TagId)
-                .Index(t => t.Special_SpecialId);
+                .PrimaryKey(t => new { t.SpecialId, t.TagId })
+                .ForeignKey("dbo.Specials", t => t.SpecialId, cascadeDelete: true)
+                .ForeignKey("dbo.Tags", t => t.TagId, cascadeDelete: true)
+                .Index(t => t.SpecialId)
+                .Index(t => t.TagId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.TagSpecials", "Special_SpecialId", "dbo.Specials");
-            DropForeignKey("dbo.TagSpecials", "Tag_TagId", "dbo.Tags");
-            DropForeignKey("dbo.Reviews", "Special_SpecialId", "dbo.Specials");
-            DropForeignKey("dbo.Specials", "Place_PlaceId", "dbo.Places");
-            DropIndex("dbo.TagSpecials", new[] { "Special_SpecialId" });
-            DropIndex("dbo.TagSpecials", new[] { "Tag_TagId" });
-            DropIndex("dbo.Reviews", new[] { "Special_SpecialId" });
-            DropIndex("dbo.Specials", new[] { "Place_PlaceId" });
-            DropTable("dbo.TagSpecials");
+            DropForeignKey("dbo.SpecialTags", "TagId", "dbo.Tags");
+            DropForeignKey("dbo.SpecialTags", "SpecialId", "dbo.Specials");
+            DropForeignKey("dbo.Reviews", "SpecialId", "dbo.Specials");
+            DropForeignKey("dbo.Specials", "PlaceId", "dbo.Places");
+            DropIndex("dbo.SpecialTags", new[] { "TagId" });
+            DropIndex("dbo.SpecialTags", new[] { "SpecialId" });
+            DropIndex("dbo.Reviews", new[] { "SpecialId" });
+            DropIndex("dbo.Specials", new[] { "PlaceId" });
+            DropTable("dbo.SpecialTags");
             DropTable("dbo.Tags");
             DropTable("dbo.Reviews");
             DropTable("dbo.Specials");

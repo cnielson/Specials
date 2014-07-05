@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Specials.DAL.Special>
+﻿@model List<Specials.UI.Models.SpecialVM>
 
 @{
     ViewBag.Title = "Index";
@@ -12,34 +12,67 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.First().Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Place.Name)
+            @Html.DisplayNameFor(model => model.First().Place.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DayOfWeek)
+            @Html.DisplayNameFor(model => model.First().DayOfWeek)
+        </th>
+        <td>
+            @Html.DisplayNameFor(model => model.First().AverageReviewScore)
+        </td>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Tags.First().Name)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Place.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DayOfWeek)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SpecialId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SpecialId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SpecialId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Place.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DayOfWeek)
+            </td>
+            <td>
+                @if (item.AverageReviewScore >= 0)
+                {
+                    @Html.DisplayFor(modelItem => item.AverageReviewScore)
+                }
+                else
+                {
+                    @Html.Display("N/A")
+                }
 
+            </td>
+            <td>
+                @{
+                var str = "";
+                foreach (var tag in item.Tags)
+                {
+                    str += tag.Name + ", ";
+                }
+                str = str.Substring(0, str.Length - 2);
+                <text>@str</text>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.SpecialId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.SpecialId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.SpecialId })
+            </td>
+
+        </tr>
+    }
 </table>
+
+<div class="row">
+
+</div>
