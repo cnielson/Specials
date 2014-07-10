@@ -1,0 +1,43 @@
+﻿@using Telerik.Web.Mvc.UI;
+@using Specials.UI.Models;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Specials</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@{Html.Telerik().Grid<SpecialVM>().Name("telerikGrid")
+    .Filterable()
+    .Sortable()
+    .Pageable(p => p.PageSize(10))
+    .DataKeys(keys => keys.Add(c => c.SpecialId).RouteKey("SpecialId"))
+    .Columns(c =>
+    {
+        c.Bound(o => o.Name).Title("Special");
+        c.Bound(o => o.Place.Name).Title("Place").ClientTemplate("<#= getPlaceLink(Place)#>");
+        c.Bound(o => o.DayOfWeek);
+        c.Bound(o => o.Tags).ClientTemplate("<#= getTagsTemplate(Tags)#>");
+    })
+    .DataBinding(db => db.Ajax().OperationMode(GridOperationMode.Client).Select("GetSpecials", "Specials"))
+    .Render();
+}
+
+<script type="text/javascript">
+
+    function getPlaceLink(place) {
+        return "<a href='@Url.Action("Details", "Places")/" + place.PlaceId + "'>" + place.Name + "</a>";
+    }
+
+    function getTagsTemplate(tags) {
+        var str = "";
+        for (var i = 0; i < tags.length; i++) {
+            str += "<a href=\"#\">" + tags[i].Name + "</a> ";
+        }
+        return str.substring(0, str.length - 1);
+    }
+</script>

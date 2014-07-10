@@ -1,60 +1,51 @@
-﻿using System;
+﻿using AutoMapper;
+using Specials.DAL;
+using Specials.DAL.Models;
+using Specials.UI.Models;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Linq;
-using Specials.DAL.Models;
-using Specials.DAL;
-using AutoMapper;
-using Specials.UI.Models;
-using System.Collections.Generic;
-using Telerik.Web.Mvc;
 
 namespace Specials.UI.Controllers
 {
-    public class SpecialsController : Controller
+    public class PlacesController : Controller
     {
         //
-        // GET: /Specials/
+        // GET: /Place/
         public ActionResult Index()
         {
-            return View("Specials");
+            return View("Places");
         }
 
-        [GridAction]
-        public ActionResult GetSpecials()
+        //
+        // GET: /Place/Details/5
+        public ActionResult Details(int id)
         {
-            return View(new GridModel(GetSpecialsFromDb()));
-        }
-
-        private List<SpecialVM> GetSpecialsFromDb()
-        {
-            using (var context = new Specials.DAL.SpecialsContext())
+            using (var context = new SpecialsContext())
             {
+                var place = context.Places.FirstOrDefault(p => p.PlaceId == id);
+                if (place == null)
+                {
+                    var error = string.Format("no place with id = {0}", id);
+                    return RedirectToAction("Error", "Home", new { msg = error });
+                }
 
-                var s = context.Specials.ToList(); //todo: convert this to VM
-                var specialVms = Mapper.Map<List<Special>, List<SpecialVM>>(s);
-
-                return specialVms;
+                var placeVm = Mapper.Map<Place, PlaceVM>(place);
+                return View("PlaceDetails", placeVm);
             }
         }
 
         //
-        // GET: /Specials/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /Specials/Create
+        // GET: /Place/Create
         public ActionResult Create()
         {
             return View();
         }
 
         //
-        // POST: /Specials/Create
+        // POST: /Place/Create
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -71,14 +62,14 @@ namespace Specials.UI.Controllers
         }
 
         //
-        // GET: /Specials/Edit/5
+        // GET: /Place/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
         //
-        // POST: /Specials/Edit/5
+        // POST: /Place/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -95,14 +86,14 @@ namespace Specials.UI.Controllers
         }
 
         //
-        // GET: /Specials/Delete/5
+        // GET: /Place/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
         //
-        // POST: /Specials/Delete/5
+        // POST: /Place/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

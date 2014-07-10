@@ -8,6 +8,7 @@ namespace Specials.UI.Models
 {
     public class TagVM
     {
+        [Key]
         public int TagId { get; set; }
 
         [Required]

@@ -26,5 +26,11 @@ namespace Specials.UI.Controllers
 
             return View();
         }
+
+        public ActionResult Error(string msg)
+        {
+            ViewBag.ErrorMessage = msg;
+            return View("Error");
+        }
     }
 }

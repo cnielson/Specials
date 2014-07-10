@@ -8,6 +8,7 @@ namespace Specials.UI.Models
 {
     public class SpecialVM
     {
+        [Key]
         public int SpecialId { get; set; }
         [Required]
         public string Name { get; set; }
@@ -18,7 +19,7 @@ namespace Specials.UI.Models
         public bool IsValid { get; set; }
         [Required]
         [Display(Name="Day")]
-        public DayOfWeek DayOfWeek { get; set; }
+        public string DayOfWeek { get; set; }
         [Display(Name="Average Review / 5")]
         public int AverageReviewScore { get; set; }
         public int TotalReviews { get; set; }

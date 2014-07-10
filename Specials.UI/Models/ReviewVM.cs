@@ -8,6 +8,7 @@ namespace Specials.UI.Models
 {
     public class ReviewVM
     {
+        [Key]
         public int ReviewId { get; set; }
         public string Description { get; set; }
         [Required]

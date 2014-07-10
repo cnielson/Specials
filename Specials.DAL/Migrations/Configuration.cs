@@ -60,6 +60,16 @@ namespace Specials.DAL.Migrations
             AddSpecial(context, 9, "$6.00 jumbo wings (8)", "Mystic Celt", true, DayOfWeek.Saturday);
             AddSpecial(context, 10, "25¢ wings", "Kelly's Pub", true, DayOfWeek.Wednesday);
             AddSpecial(context, 11, "35¢ wings", "Houndstooth Saloon", true, DayOfWeek.Monday);
+            AddSpecial(context, 12, "50¢ wings", "McFadden's", true, DayOfWeek.Wednesday);
+            AddSpecial(context, 13, "50¢ wings", "Avenue Tavern", true, DayOfWeek.Saturday);
+            AddSpecial(context, 14, "$3.50 small order wings", "Toons", true, DayOfWeek.Thursday);
+            AddSpecial(context, 15, "35¢ wings", "Temple Bar", true, DayOfWeek.Monday);
+            AddSpecial(context, 16, "45¢ jumbo wings", "Patsy's Pub", true, DayOfWeek.Thursday);
+            AddSpecial(context, 17, "50C wings", "Rocks Lakeview", true, DayOfWeek.Monday);
+            AddSpecial(context, 18, "25¢ jumbo wings", "The Rail", true, DayOfWeek.Monday);
+            AddSpecial(context, 19, "25¢ jumbo wings", "The Rail", true, DayOfWeek.Thursday);
+            AddSpecial(context, 20, "40¢ wings", "O’Donovan’s", true, DayOfWeek.Tuesday);
+            AddSpecial(context, 21, "$5 all you can eat wings", "Gannon's Pub", true, DayOfWeek.Wednesday);
             context.SaveChanges();
         }
 
@@ -89,6 +99,15 @@ namespace Specials.DAL.Migrations
             AddPlace(context, 8, "Mystic Celt");
             AddPlace(context, 9, "Kelly's Pub");
             AddPlace(context, 10, "Houndstooth Saloon");
+            AddPlace(context, 11, "McFadden's");
+            AddPlace(context, 12, "Avenue Tavern");
+            AddPlace(context, 13, "Toons");
+            AddPlace(context, 14, "Temple Bar");
+            AddPlace(context, 15, "Patsy's Pub");
+            AddPlace(context, 16, "Rocks Lakeview");
+            AddPlace(context, 17, "The Rail");
+            AddPlace(context, 18, "O’Donovan’s");
+            AddPlace(context, 19, "Gannon's Pub");
             context.SaveChanges();
         }
 

@@ -12,14 +12,35 @@ namespace Specials.UI.Models
         public static void Configure()
         {
             Mapper.CreateMap<Special, SpecialVM>()
-                .ForMember(dest => dest.DayOfWeek, opt => opt.MapFrom(src => (DayOfWeek)src.DayOfWeek))
                 .ForMember(dest => dest.AverageReviewScore, opt => opt.MapFrom(src => (GetAverage(src))))
-                .ForMember(dest=>dest.TotalReviews, opt=>opt.MapFrom(src=>src.Reviews.Count()));
+                .ForMember(dest => dest.TotalReviews, opt => opt.MapFrom(src => src.Reviews.Count()))
+                .ForMember(dest => dest.DayOfWeek, opt=>opt.MapFrom(src=> Enum.GetName(typeof(DayOfWeek), src.DayOfWeek)));
             Mapper.CreateMap<Tag, TagVM>();
             Mapper.CreateMap<Place, PlaceVM>();
             Mapper.CreateMap<Review, ReviewVM>();
 
             Mapper.AssertConfigurationIsValid();
+        }
+
+        private static string GetDayEnum(DayOfWeek day)
+        {
+            switch (day)
+            {
+                case (DayOfWeek.Monday):
+                    return "Monday";
+                case (DayOfWeek.Tuesday):
+                    return "Tuesday";
+                case (DayOfWeek.Wednesday):
+                    return "Wednesday";
+                case (DayOfWeek.Thursday):
+                    return "Thursasdfay";
+                case (DayOfWeek.Friday):
+                    return "Friday";
+                case (DayOfWeek.Saturday):
+                    return "Saturday";
+                default:
+                    return "Sunday";
+            }
         }
 
         private static int GetAverage(Special src)
