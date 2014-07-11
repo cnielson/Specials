@@ -10,7 +10,7 @@ namespace Specials.UI.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Specials");
         }
 
         public ActionResult About()
